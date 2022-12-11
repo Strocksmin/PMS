@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
+    <link rel="stylesheet" href="/assets/css/profilecss.css">
+    <link rel="stylesheet" href="/assets/css/adminstyle.css">
+    <link rel="icon" type="image/png" href="/assets/img/logo.png">
+</head>
+<body>
+<header class="l-header" style="position: inherit !important; border-bottom: 1px solid; border-color: #cccccc;">
+    <div class="l-header__inner clearfix" style="border: 0">
+        <div class="c-search">
+            Личный кабинет
+        </div>
+        <div class="header-icons-group">
+            <a href="/logout"><div class="c-header-icon logout"><i class="fa fa-power-off"></i></div></a>
+        </div>
+    </div>
+</header>
+<!-- partial:index.partial.html -->
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar" th:object="${user}">
+                <div class="profile-userpic">
+                    <img th:src="${path}" class="img-responsive" alt="">
+                </div>
+                <div class="profile-usertitle" >
+                    <div class="profile-usertitle-name" th:text="${user.getName() + ' ' + user.getLastname()}">
+                    </div>
+                    <a th:href="@{clientprofileUploadImage}">
+                    <button style="background-color: #4e73df; border-color: #4e73df;color: #fff;cursor: pointer;padding: 0.25rem 0.5rem;font-size: 1.5rem;border-radius: 0.5rem !important; margin-top: 2rem">
+                        Сменить фото
+                    </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="content-wrapper content-wrapper--with-bg">
+                <div class="page-content">
+                    <div class="container">
+                        <div class="header_wrap">
+                            <div class="num_rows">
+
+                                <div class="form-group">    <!--		Show Numbers Of Rows 		-->
+                                    <select class="form-control" name="state" id="maxRows">
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="70">70</option>
+                                        <option value="100">100</option>
+                                        <option value="5000">Показать всё</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="tb_search">
+                                <input type="text" id="search_input_all" onkeyup="FilterkeyWord_all_table()"
+                                       placeholder="Поиск..." class="form-control">
+                            </div>
+                        </div>
+                        <table class="table table-striped table-class" id="table-id">
+                            <thead>
+                            <tr>
+                                <th>Назначитель</th>
+                                <th>Описание задачи</th>
+                                <th>Дата назначения</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="task : ${tasks}">
+                                <td th:text="${task.getAppointee().getName()} + ' ' + ${task.getAppointee().getLastname()}"></td>
+                                <td th:text="${task.getDescription()}"></td>
+                                <td th:text="${task.getCreation_date()}"></td>
+                                <td class="text-center">
+                                    <a th:href="@{adminpanel/acceptTask/{id} (id = ${task.getId()})}">
+                                        <button class="btn btn-success" type="button" style="width: 5.5em;height: 3em;font-size: 1.3rem; padding: 0;">Сделано</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tbody>
+                        </table>
+
+                        <!--		Start Pagination -->
+                        <div class='pagination-container'>
+                            <nav>
+                                <ul class="pagination">
+                                    <!--	Here the JS Function Will Add the Rows -->
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="rows_count">Showing 11 to 20 of 91 entries</div>
+
+                    </div> <!-- 		End of Container -->
+
+
+                    <!-- partial -->
+                    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+                    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+                    <script src="assets/js/adminscript.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- partial -->
+<script src="/assets/js/adminscript.js"></script>
+</body>
+</html>

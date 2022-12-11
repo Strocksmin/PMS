@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+  <meta charset="UTF-8">
+  <title>Панель Администратора</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+<link rel="stylesheet" href="assets/css/adminstyle.css">
+    <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+</head>
+<body>
+<body class="sidebar-is-reduced">
+  <header class="l-header">
+    <div class="l-header__inner clearfix">
+      <div class="c-header-icon js-hamburger">
+        <div class="hamburger-toggle"><span class="bar-top"></span><span class="bar-mid"></span><span class="bar-bot"></span></div>
+      </div>
+
+      <div class="c-search">
+        Заявки
+      </div>
+        <div class="header-icons-group">
+            <a href="/logout"><div class="c-header-icon logout"><i class="fa fa-power-off"></i></div></a>
+        </div>
+    </div>
+  </header>
+  <div class="l-sidebar">
+    <div class="logo">
+      <div class="logo__txt">PMS</div>
+    </div>
+    <div class="l-sidebar__content">
+      <nav class="c-menu js-menu">
+        <ul class="u-list">
+          <li class="c-menu__item is-active" data-toggle="tooltip" title="Заявки">
+            <a href="/adminpanel" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-address-card"></i>
+              <div class="c-menu-item__title"><span>Заявки</span></div>
+            </div></a>
+          </li>
+          <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Клиенты">
+            <a href="/adminpanel/clients" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-users"></i>
+              <div class="c-menu-item__title"><span>Клиенты</span></div>
+            </div></a>
+          </li>
+          <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Пользователи">
+              <a href="/adminpanel/users" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-user-secret"></i>
+              <div class="c-menu-item__title"><span>Пользователи</span></div>
+              </div></a>
+          </li>
+            <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Создать задачу">
+                <a href="/adminpanel/createTask" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-plus"></i>
+                    <div class="c-menu-item__title"><span>Создать задачу</span></div>
+                </div></a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</body>
+<main class="l-main">
+  <div class="content-wrapper content-wrapper--with-bg">
+    <div class="page-content"><div class="container">
+      <div class="header_wrap">
+        <div class="num_rows">
+				<div class="form-group">
+			 		<select class  ="form-control" name="state" id="maxRows">
+						 <option value="10">10</option>
+						 <option value="15">15</option>
+						 <option value="20">20</option>
+						 <option value="50">50</option>
+						 <option value="70">70</option>
+						 <option value="100">100</option>
+            <option value="5000">Показать всё</option>
+						</select>
+
+			  	</div>
+        </div>
+        <div class="tb_search">
+<input type="text" id="search_input_all" onkeyup="FilterkeyWord_all_table()" placeholder="Search.." class="form-control">
+        </div>
+      </div>
+<table class="table table-striped table-class" id= "table-id">
+<thead>
+<tr>
+		<th>Имя</th>
+		<th>Телефон</th>
+		<th>Дата</th>
+		<th>Специализация</th>
+	</tr>
+  </thead>
+<tbody>
+	<tr th:each="proposal : ${proposals}">
+		<td th:text="${proposal.getName()}"> </td>
+		<td th:text="${proposal.getNumber()}"></td>
+		<td th:text="${proposal.getDatetime()}"></td>
+		<td th:text="${proposal.getSpecialization()}"></td>
+		<td class="text-center">
+			<a th:href="@{adminpanel/edit/{id} (id = ${proposal.getId()})}">
+                <button class="btn btn-info" type="button" style="width: 5.5em;height: 3em;font-size: 1.3rem; padding: 0;">Изменить</button>
+            </a>
+		</td>
+		<td class="text-center">
+            <a th:href="@{adminpanel/accept/{id} (id = ${proposal.getId()})}">
+                <button class="btn btn-success" type="button" style="width: 5.5em;height: 3em;font-size: 1.3rem; padding: 0;">Принять</button>
+            </a>
+		</td>
+		<td class="text-center">
+            <a th:href="@{adminpanel/delete/{id} (id = ${proposal.getId()})}">
+                <button class="btn btn-danger"  type="button" style="width: 5.5em;height: 3em;font-size: 1.3rem; padding: 0;">Отказ</button>
+            </a>
+		</td>
+	</tr>
+    <tbody>
+</table>
+			<div class='pagination-container'>
+				<nav>
+				  <ul class="pagination">
+				  </ul>
+				</nav>
+			</div>
+      <div class="rows_count">Showing 11 to 20 of 91 entries</div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+		<script  src="assets/js/adminscript.js"></script></div>
+  </div>
+</main>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src='https://use.fontawesome.com/releases/v5.0.8/js/all.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script  src="assets/js/adminscript.js"></script>
+</body>
+</html>

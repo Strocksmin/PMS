@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель Администратора</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+    <link rel="stylesheet" href="/assets/css/adminstyle.css">
+    <link rel="icon" type="image/png" href="/assets/img/logo.png">
+    <link th:rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link th:rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link th:rel="stylesheet" href="/assets/css/Bootstrap-DataTables.css">
+    <link th:rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
+    <link th:rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+    <link th:rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link th:rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+    <link th:rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link th:rel="stylesheet" href="/assets/css/Ludens---1-Index-Table-with-Search--Sort-Filters-v20.css">
+    <link th:rel="stylesheet" href="/assets/css/Profile-with-data-and-skills.css">
+    <link th:rel="stylesheet" href="/assets/css/Toggle-Buttons.css">
+    <link th:rel="stylesheet" href="/assets/css/untitled.css">
+    <link th:rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<body class="sidebar-is-reduced">
+<header class="l-header">
+    <div class="l-header__inner clearfix">
+        <div class="c-header-icon js-hamburger">
+            <div class="hamburger-toggle"><span class="bar-top"></span><span class="bar-mid"></span><span class="bar-bot"></span></div>
+        </div>
+
+        <div class="c-search">
+            Задачи
+        </div>
+        <div class="header-icons-group">
+            <a href="/logout"><div class="c-header-icon logout"><i class="fa fa-power-off"></i></div></a>
+        </div>
+    </div>
+</header>
+<div class="l-sidebar">
+    <div class="logo">
+        <div class="logo__txt">М</div>
+    </div>
+    <div class="l-sidebar__content">
+        <nav class="c-menu js-menu">
+            <ul class="u-list">
+                <li class="c-menu__item is-active" data-toggle="tooltip" title="Заявки">
+                    <a href="/adminpanel" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-address-card"></i>
+                        <div class="c-menu-item__title"><span>Заявки</span></div>
+                    </div></a>
+                </li>
+                <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Клиенты">
+                    <a href="/adminpanel/clients" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-users"></i>
+                        <div class="c-menu-item__title"><span>Клиенты</span></div>
+                    </div></a>
+                </li>
+                <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Пользователи">
+                    <a href="/adminpanel/users" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-user-secret"></i>
+                        <div class="c-menu-item__title"><span>Пользователи</span></div>
+                    </div></a>
+                </li>
+                <li class="c-menu__item has-submenu" data-toggle="tooltip" title="Создать задачу">
+                    <a href="/adminpanel/createTask" style="color: white"><div class="c-menu__item__inner"><i class="fa fa-plus"></i>
+                        <div class="c-menu-item__title"><span>Создать задачу</span></div>
+                    </div></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+<main class="l-main">
+    <div class="card-body p-sm-5">
+        <h2 class="text-center mb-4">Создание задачи</h2>
+        <form th:action="@{/adminpanel/taskCreation}" th:object="${task}" method="post" class="editform">
+            <div class="mb-3">
+                <textarea class="form-control" id="message-1" th:field="*{description}" name="text" rows="4" placeholder="Описание задачи" style="height: auto !important;"></textarea>
+            </div>
+            <select class="form-select" th:field="*{creation_date}" style="margin-top: 1em;margin-bottom: 1em; padding: .1rem 1rem !important;">
+                <optgroup label="Сотрудники">
+                    <option th:each="user : ${users}" th:value="${user.getEmail()}" th:text="${user.getName()} + ' ' + ${user.getLastname()}" selected=""></option>
+                </optgroup>
+            </select>
+            <input class="form-control" type="datetime-local" th:field="*{finish_date}" style="margin-bottom: 1em; background-color: white;" required="" placeholder="Выберите дату">
+            <div>
+                <button class="btn btn-primary d-block w-100" type="submit" style="font-size: 1.5em;">Создать</button>
+            </div>
+        </form>
+    </div>
+
+</main>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src='https://use.fontawesome.com/releases/v5.0.8/js/all.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script  src="/assets/js/adminscript.js"></script>
+
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+<script src="/assets/js/Bootstrap-DataTables.js"></script>
+<script src="/assets/js/DataTable---Fully-BSS-Editable.js"></script>
+<script src="/assets/js/bold-and-bright.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-storage.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="/assets/js/Ludens---1-Index-Table-with-Search--Sort-Filters-v20-1.js"></script>
+<script src="/assets/js/Ludens---1-Index-Table-with-Search--Sort-Filters-v20.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+<script>
+    config = {
+        enableTime: true,
+        dateFormat: "d.m в H:i",
+        minDate: new Date().fp_incr(1),
+        maxDate: new Date().fp_incr(14),
+        minTime: "09:00",
+        maxTime: "20:00",
+        time_24hr: true,
+        "locale": "ru"
+    }
+    flatpickr("input[type=datetime-local]", config)
+</script>
+</body>
+</html>

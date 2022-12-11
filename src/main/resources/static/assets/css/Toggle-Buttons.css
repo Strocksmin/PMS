@@ -1,0 +1,6 @@
+[data-toggle="radio"] > input[type="radio"], [data-toggle="checkbox"] > input[type="checkbox"] {
+  display: none;
+}
+
+.btn {
+}
